@@ -1,0 +1,22 @@
+{
+  "name": "rn-pack",
+  "version": "1.0.0",
+  "description": "migrate from react-native packager to webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "react-native-event-source": "^1.0.0",
+    "rn-pack-hot-loader": "^1.0.0",
+    "rn-pack-url-loader": "^1.0.0",
+    "webpack-dev-middleware": "^1.11.0",
+    "webpack-hot-middleware": "^2.18.1",
+    "babel-loader": "^7.1.1",
+    "webpack": "^3.0.0",
+    "express": "^4.15.3"
+  },
+  "author": "yoution",
+  "license": "ISC"
+}
