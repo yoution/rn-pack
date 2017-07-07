@@ -1,4 +1,7 @@
 
+if (process.env.NODE_ENV != 'production') {
+  process.env.NODE_ENV = 'development';
+}
 let hastemap = require('./hastemap')
 
 hastemap(function(moduleObj) {
@@ -7,20 +10,12 @@ hastemap(function(moduleObj) {
   const path = require('path');
   const webpack = require('webpack');
   const express = require('express');
-  // let config = require('../../webpack.config');
-  const defaultConfig = require('./webpack.config.default');
-  //middleware
-  let config
-
-  // let configObj = defaultConfig.resolve.alias
-  // let configObj = defaultConfig.resolve.alias
-  let defaultResolveObj = defaultConfig.resolve.alias;
-  // defaultConfig.resolve.alias;
-  defaultConfig.resolve.alias = Object.assign({},moduleObj,defaultResolveObj)
-  config = defaultConfig;
+  let config = require('../../webpack.config');
+  let configAlias = config.resolve.alias;
+  config.resolve.alias = Object.assign({},moduleObj,configAlias)
 
   const hotloadmiddleware = require('webpack-hot-middleware');
-  const liveReloadmiddleware = require('./liveReloadmiddleware');
+  const liveReloadmiddleware = require('./middleware/liveReloadmiddleware');
   const ReactNativeServerMiddlewarePath = 'react-native/local-cli/server/middleware';
   const loadRawBodyMiddleware = require(ReactNativeServerMiddlewarePath + '/loadRawBodyMiddleware');
   const getDevToolsMiddleware = require(ReactNativeServerMiddlewarePath + '/getDevToolsMiddleware');
@@ -47,8 +42,7 @@ hastemap(function(moduleObj) {
   const compiler = webpack(config);
 
   app.use(function(req, res, next) {
-
-    console.log(`Using middleware for ${req.url}`);
+    // console.log(`Using middleware for ${req.url}`);
     next();
   });
   app.use(liveReloadmiddleware(compiler));

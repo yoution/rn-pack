@@ -1,6 +1,6 @@
 {
   "name": "rn-pack",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "migrate from react-native packager to webpack",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,11 @@
     "webpack": "^3.0.0",
     "express": "^4.15.3"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yoution/rn-pack"
+  },
+  "homepage": "https://github.com/yoution/rn-pack",
   "author": "yoution",
   "license": "ISC"
 }

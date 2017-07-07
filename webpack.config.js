@@ -1,28 +1,19 @@
-var fs = require('fs')
+let fs = require('fs');
 var webpack = require('webpack')
+let polyfills = require('./node_modules/rn-pack/polyfills');
 
-var definePlugin = new webpack.DefinePlugin({
+let definePlugin = new webpack.DefinePlugin({
    __DEV__: JSON.stringify(true),
   'process.env': {
-    NODE_ENV: JSON.stringify('development')
+    NODE_ENV: JSON.stringify(process.env.NODE_ENV)
   }
 });
 
 let platform = process.env.PLATFORM || 'ios';
-
-module.exports = {
+let configObj = {
     entry:{
-      main: [
-        // 'webpack-hot-middleware/client',
-        './node_modules/react-native/packager/src/Resolver/polyfills/Object.es6.js',
-        './node_modules/react-native/packager/src/Resolver/polyfills/console.js',
-        './node_modules/react-native/packager/src/Resolver/polyfills/error-guard.js',
-        './node_modules/react-native/packager/src/Resolver/polyfills/Number.es6.js',
-        './node_modules/react-native/packager/src/Resolver/polyfills/String.prototype.es6.js',
-        './node_modules/react-native/packager/src/Resolver/polyfills/Array.prototype.es6.js',
-        './node_modules/react-native/packager/src/Resolver/polyfills/Array.es6.js',
-        './node_modules/react-native/packager/src/Resolver/polyfills/Object.es7.js',
-        './node_modules/react-native/packager/src/Resolver/polyfills/babelHelpers.js',
+      main: [ 
+        ...polyfills,
         "./index."+platform+ ".js",
       ],
     },
@@ -32,7 +23,7 @@ module.exports = {
       path: __dirname,
       filename: "index."+ platform +".bundle"
     },
-    devtool: 'eval-source-map',
+    // devtool: 'eval-source-map',
     // devtool: 'source-map',
     module: {
       loaders: [
@@ -57,7 +48,7 @@ module.exports = {
   resolve:{
     modules:['node_modules'],
     alias: {
-      HMRClient: __dirname + '/hotloadClient'
+      HMRClient:  'rn-pack/hotloadClient'
     },
     extensions: ['.'+ platform +'.js','.native.js','.js']
   },
@@ -71,3 +62,5 @@ module.exports = {
     port: 8081,
   }
 };
+
+module.exports = configObj;
